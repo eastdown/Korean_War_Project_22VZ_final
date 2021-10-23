@@ -105,7 +105,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 color: Colors.blue,
               ),
               child: Text(
-                'Drawer Header',
+                'Menu',
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 24,

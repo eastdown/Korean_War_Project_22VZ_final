@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import 'anv.dart';
+
+late int currentIndex;
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -20,6 +24,7 @@ class _HomeState extends State<Home> {
 
   final Stream<QuerySnapshot> adv = FirebaseFirestore.instance.collection('ArticlesAndVideo').snapshots();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +38,7 @@ class _HomeState extends State<Home> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               return Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                 color: Colors.white,
                 elevation: 10,
                 child: GridTile(
@@ -42,7 +47,8 @@ class _HomeState extends State<Home> {
                     child: SizedBox(
                       child: GestureDetector(
                         onTap: () {
-
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => AnvPage()));
+                          currentIndex = index;
                         },
                         child: Column(
                           children: <Widget>[
