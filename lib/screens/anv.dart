@@ -19,6 +19,16 @@ class _AnvPageState extends State<AnvPage> {
     return  StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('ArticlesAndVideo').snapshots(),
     builder: (context, snapshot) {
+      
+      String url = '${snapshot.data!.docs[currentIndex]['video']}';
+      YoutubePlayerController _controller = YoutubePlayerController(
+        initialVideoId: "${YoutubePlayer.convertUrlToId(url)}",
+        flags: YoutubePlayerFlags(
+          autoPlay: true,
+          mute: false,
+        ),
+      );
+      
       return Scaffold(
         appBar: AppBar(
             elevation: 0,
@@ -27,8 +37,12 @@ class _AnvPageState extends State<AnvPage> {
             centerTitle: true,
             title: Text(snapshot.data!.docs[currentIndex]['title'], style: TextStyle(color: Colors.black))
         ),
-        body: Row(
+        body: Colum(
           children: <Widget>[
+            YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+            ),
             Text(snapshot.data!.docs[currentIndex]['article']),
           ]
         )
