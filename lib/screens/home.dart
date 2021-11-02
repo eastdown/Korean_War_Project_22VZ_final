@@ -40,7 +40,6 @@ class _HomeState extends State<Home> {
               return Card(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
                 color: Colors.white,
-                elevation: 10,
                 child: GridTile(
                   child: Container(
                     padding: EdgeInsets.only(top:20, bottom:20),
@@ -54,7 +53,7 @@ class _HomeState extends State<Home> {
                           children: <Widget>[
                             Container(
                               padding: EdgeInsets.only(right:10, left: 10, bottom:10),
-                            child: Image.network('${snapshot.data!.docs[index]['image']}'),),
+                            child: Image.network('${snapshot.data!.docs[index]['image']}', fit: BoxFit.fitWidth,)),
                             Container(
                               padding: EdgeInsets.only(left:10,),
                               child: Align(

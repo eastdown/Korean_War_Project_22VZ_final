@@ -19,68 +19,76 @@ class _SecondState extends State<Second> {
   @override
   Widget build(BuildContext context) {
     return
-      Column(
-                    children: <Widget>[
-                            Row(
+      Scaffold(
+      body: ListView(
+        children: <Widget>[
+                              Row(
                               children: <Widget>[
                                 Padding(padding: EdgeInsets.only(left:30, top: 10)),
                                 Text('A', style: TextStyle(fontSize: 40)),
                               ]
                           ),
-                     Flexible(
-                         child: StreamBuilder<QuerySnapshot>(
+
+    Flexible(
+    child:StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance.collection('ArticlesAndVideo').snapshots(),
                       builder: (context, snapshot) {
-                        if (!snapshot.hasData){
-                          return CircularProgressIndicator();
+                        if (!snapshot.hasData) {
+                          return Divider(height: 1, thickness: 1);
                         }
-                            return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
-                            color: Colors.white,
-                            elevation: 10,
-                            child: GridTile(
-                              child: Container(
-                                padding: EdgeInsets.only(top:20, bottom:20),
-                                child: SizedBox(
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => AnvPage()));
-                                        currentIndex = index;
-                                      },
-                                      child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                              padding: EdgeInsets.only(right:10, left: 10, bottom:10),
-                                              child: Image.network('${snapshot.data!.docs[index]['image']}'),),
-                                            Container(
-                                              padding: EdgeInsets.only(left:10,),
-                                              child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(snapshot.data!.docs[index]['title'],
-                                                  style: TextStyle(
-                                                    fontSize: 30,),
-                                                  textAlign: TextAlign.left,
-                                                ),),
-                                            ),
-                                          ]
-                                      )
-                                  ),),),
-                            ),);
-                        },
-                      );
-    }
-                     )),
-                      Row(
-                          children: <Widget>[
-                            Padding(padding: EdgeInsets.only(left:30, top: 10)),
-                            Text('A', style: TextStyle(fontSize: 40)),
-                          ]
-                      ),]
-
-
-                );
+                        return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),),
+                                color: Colors.white,
+                                elevation: 10,
+                                child: GridTile(
+                                  child: Container(
+                                    padding: EdgeInsets.only(top: 20,
+                                        bottom: 20),
+                                    child: SizedBox(
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AnvPage()));
+                                            currentIndex = index;
+                                          },
+                                          child: Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  padding: EdgeInsets.only(
+                                                      right: 10,
+                                                      left: 10,
+                                                      bottom: 10),
+                                                  child: Image.network(
+                                                      '${snapshot.data!
+                                                          .docs[index]['image']}'),),
+                                                Container(
+                                                  padding: EdgeInsets.only(
+                                                    left: 10,),
+                                                  child: Align(
+                                                    alignment: Alignment
+                                                        .centerLeft,
+                                                    child: Text(snapshot.data!
+                                                        .docs[index]['title'],
+                                                      style: TextStyle(
+                                                        fontSize: 30,),
+                                                      textAlign: TextAlign.left,
+                                                    ),),
+                                                ),
+                                              ]
+                                          )
+                                      ),),),
+                                ),);
+                            });
+                      })
+    )]
+    ));
   }
 }

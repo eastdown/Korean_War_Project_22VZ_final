@@ -19,7 +19,7 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'Flutter Code Sample';
+  static const String _title = '22VZ';
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _currentIndex = 0;
 
-  final List<Widget> _children = [const Home(),  const Second(), const First(),];
+  final List<Widget> _children = [const Home(),  const Second(), First(),];
   void _onTap(int index) {
     setState(() {
       _currentIndex = index;
@@ -99,10 +99,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: const <Widget>[
+          children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.indigoAccent,
               ),
               child: Text(
                 'Menu',
@@ -113,16 +113,22 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Messages'),
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                setState(() {
+                });
+              }
             ),
             ListTile(
               leading: Icon(Icons.account_circle),
               title: Text('Profile'),
+              //onTap
             ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
+              //onTap
             ),
           ],
         ),
@@ -134,16 +140,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         currentIndex: _currentIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            label:'home',
-            icon: Icon(Icons.home,)
+            label:'Home',
+            icon: Icon(Icons.home,
+            )
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'School',
+            label: 'Korea Today',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business,),
-            label: 'Business',
+            icon: Icon(Icons.people),
+            label: 'Our Team',
           ),
         ],
         //currentIndex: _selectedIndex,
