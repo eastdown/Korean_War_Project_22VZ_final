@@ -43,20 +43,28 @@ class _AnvPageState extends State<AnvPage> {
                     constraints: BoxConstraints(),
           child: Column(
                   children: <Widget>[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 10, bottom: 10, top:10),
+                        child: Text(snapshot.data!.docs[currentIndex]['title'], style: TextStyle(fontSize:30, fontFamily: 'NotoSerifBold')),
+                      )),
+
+
                     YoutubePlayer(
                       controller: _controller,
                       showVideoProgressIndicator: true,
                     ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(snapshot.data!.docs[currentIndex]['title'], style: TextStyle(fontSize:30, fontFamily: 'MontserratExtraBold')),
-                      )),
+
                         Padding(
-                      padding: EdgeInsets.only(left:10, right: 10),
-                        child:Text(snapshot.data!.docs[currentIndex]['article'].replaceAll("\\n", "\n"), style: TextStyle(height: 1.5, fontSize:20, fontFamily: 'NotoSerif'))
-                    )]
+                      padding: EdgeInsets.only(left:15, right: 15, top: 10),
+                        child:Text(snapshot.data!.docs[currentIndex]['article'].replaceAll("\\n", "\n"), style: TextStyle(height: 1.6, fontSize:20, fontFamily: 'NotoSerif'))
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 50)
+                    )
+                  ]
               )))
           );
         }
