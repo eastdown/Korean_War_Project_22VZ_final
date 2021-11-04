@@ -36,17 +36,28 @@ class _AnvPageState extends State<AnvPage> {
                   iconTheme: const IconThemeData(color: Colors.grey),
                   backgroundColor: Colors.white,
                   centerTitle: true,
-                  title: Text(snapshot.data!.docs[currentIndex]['title'], style: TextStyle(color: Colors.black))
+                  title: Text(snapshot.data!.docs[currentIndex]['title'], style: TextStyle(color: Colors.black, fontFamily: 'MontserratExtraBold'))
               ),
-              body: Column(
+              body: SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(),
+          child: Column(
                   children: <Widget>[
                     YoutubePlayer(
                       controller: _controller,
                       showVideoProgressIndicator: true,
                     ),
-                    Text(snapshot.data!.docs[currentIndex]['article']),
-                  ]
-              )
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Text(snapshot.data!.docs[currentIndex]['title'], style: TextStyle(fontSize:30, fontFamily: 'MontserratExtraBold')),
+                      )),
+                        Padding(
+                      padding: EdgeInsets.only(left:10, right: 10),
+                        child:Text(snapshot.data!.docs[currentIndex]['article'].replaceAll("\\n", "\n"), style: TextStyle(height: 1.5, fontSize:20, fontFamily: 'NotoSerif'))
+                    )]
+              )))
           );
         }
     );

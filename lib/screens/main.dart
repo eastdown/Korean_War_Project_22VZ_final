@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: _title,
       home: MyStatefulWidget(),
@@ -43,7 +43,7 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _currentIndex = 0;
 
-  final List<Widget> _children = [const Home(),  const Second(), First(),];
+  final List<Widget> _children = [Home(), Second(), First(),];
   void _onTap(int index) {
     setState(() {
       _currentIndex = index;

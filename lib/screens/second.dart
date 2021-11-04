@@ -27,17 +27,15 @@ class _firstState extends State<First>{
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 1,
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: TabBar(
-            isScrollable: true,
-            labelStyle: TextStyle(fontSize:12.5, fontWeight: FontWeight.bold),
+            labelStyle: TextStyle(fontSize:15, fontWeight: FontWeight.bold),
             labelColor: Colors.black,
             tabs: [
-              Tab(text: "What we do"),
-              Tab(text: "Why we do" ),
+              Tab(text: "About us"),
               Tab(text: "Leadership"),
               Tab(text: "Contact"),
             ],
@@ -46,15 +44,45 @@ class _firstState extends State<First>{
         body: TabBarView(
           children: <Widget>[
             Scaffold(
-              body: Column(
+              body: SingleChildScrollView(
+            child: ConstrainedBox(
+            constraints: BoxConstraints(),
+        child: Column(
                 children: <Widget> [
-                  Center(),
 
+                  Padding(
+                      padding: EdgeInsets.only(left:10, right:10, top:20),
+                      child: Text('Who We Are', style: TextStyle(fontSize: 50, fontFamily: 'MontserratExtraBold', ))
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(left:20, right: 40, top:20),
+                      child: Text('We are a youth organization that strives to connect, communicate, and show gratitude to the Korean War Veterans.',
+                          style: TextStyle(fontSize: 20, fontFamily: 'NotoSerif'))
+                  ),
+
+                  Padding(
+                      padding: EdgeInsets.only(left:10, top: 30, right:10),
+                      child: Text('What We Do', style: TextStyle(fontSize: 50, fontFamily: 'MontserratExtraBold',))
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(left:20, right: 40, top:20),
+                      child: Text('Our goal is to show how current-day Korea has changed since the Korean War. We post videos, write articles, and conduct research on the history of the war to connect with the youth, who do not know much, and to remember the services of the veterans. \n \n But that is not what we only do. Another goal of ours is to give back to the veterans who have served in the war. There are many of them who are poor and in need of aid. We hope to raise a charity for them to meet their needs and show appreciation for their service.',
+                          style: TextStyle(fontSize: 20, fontFamily: 'NotoSerif'))
+                  ),
+                  /*Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left:10, top: 30),
+                      child: Text('Purpose', style: TextStyle(fontSize: 50, fontFamily: 'MontserratExtraBold'))
+                  ),),
+
+                  Padding(
+                      padding: EdgeInsets.only(left:20, right: 40),
+                      child: Text('',
+                          style: TextStyle(fontSize: 25, fontFamily: 'NotoSerif'))
+                  ),*/
                 ]
-              ),
-            ),
-            Center(
-              child: Text("It's cloudy here"),
+              ),),)
             ),
 
 
@@ -64,12 +92,22 @@ class _firstState extends State<First>{
 
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
-
-      Image.asset('image/groupphoto.jpg'),
-
+      Align(
+        alignment: Alignment.centerLeft,
+        child:Padding(
+        padding: EdgeInsets.only(bottom: 20, top:10, left: 10),
+        child: Text(
+        'Leadership',
+        style: TextStyle(fontSize: 50, fontFamily:'MontserratExtraBold'),
+      ),),),
+    Align(
+      alignment: Alignment.centerLeft,
+      child:Text('  Our team has 5 lea\nders, each' ),
+    ),
     Text(
-    'Headline',
-    style: TextStyle(fontSize: 18),
+    'Leaders',
+    style: TextStyle(fontSize: 18, fontFamily: 'MontserratExtraBold'),
+      textAlign: TextAlign.left,
     ),
 
     SizedBox(
@@ -83,17 +121,17 @@ class _firstState extends State<First>{
     semanticContainer: true,
     child: Stack(
         children: <Widget>[
-          Image.asset('image/ChanPark.jpg'),
+          Image.asset('image/Amber.jpg'),
         Center(child: Text("someText")),
         ]
-    )
-        ),
+        ),),
       Card(
           semanticContainer: true,
           child: Stack(
               children: <Widget>[
                 Image.asset('image/ChanPark.jpg'),
-                Center(child: Text("someText")),
+                Text("Chan Park", style: TextStyle(fontSize: 30, color: Colors.white)),
+
               ]
           )
       ),
@@ -132,9 +170,20 @@ class _firstState extends State<First>{
 
     ])
     ),),
-            Center(
-              child: Text("It's sunny here"),
-            ),
+
+
+            Scaffold(
+              body: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left:10, top: 10),
+                    child: Text('Contact', style: TextStyle(fontSize: 50, fontFamily: 'MontserratExtraBold')),
+                  )
+                ]
+              )
+            )
+
+
           ],
         ),
       ),
