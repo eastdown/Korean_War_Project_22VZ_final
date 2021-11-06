@@ -72,6 +72,11 @@ flutter:
     - image/Amber.jpg
     - image/Andrew.jpg
     - image/Dongha.jpg
+    - image/youtube_logo.png
+    - image/box.png
+    - image/box.jpg
+    - image/logoP.png
+    - image/logoL.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -99,6 +104,9 @@ flutter:
     - family: NotoSerifBold
       fonts:
         - asset: font/NotoSerif-Bold.ttf
+    - family: MontserratRegular
+      fonts:
+        - asset: font/montserrat/Montserrat-Regular.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

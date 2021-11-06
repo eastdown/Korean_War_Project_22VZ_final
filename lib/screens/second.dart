@@ -56,8 +56,8 @@ class _firstState extends State<First>{
                   ),
                   Padding(
                       padding: EdgeInsets.only(left:20, right: 40, top:20),
-                      child: Text('We are a youth organization that strives to connect, communicate, and show gratitude to the Korean War Veterans.',
-                          style: TextStyle(fontSize: 20, fontFamily: 'NotoSerif'))
+                      child: Text('    We are a youth organization that strives to connect, communicate, and show gratitude to the Korean War Veterans.',
+                          style: TextStyle(fontSize: 20, fontFamily: 'MontserratRegular'))
                   ),
 
                   Padding(
@@ -66,8 +66,8 @@ class _firstState extends State<First>{
                   ),
                   Padding(
                       padding: EdgeInsets.only(left:20, right: 40, top:20),
-                      child: Text('Our goal is to show how current-day Korea has changed since the Korean War. We post videos, write articles, and conduct research on the history of the war to connect with the youth, who do not know much, and to remember the services of the veterans. \n \n But that is not what we only do. Another goal of ours is to give back to the veterans who have served in the war. There are many of them who are poor and in need of aid. We hope to raise a charity for them to meet their needs and show appreciation for their service.',
-                          style: TextStyle(fontSize: 20, fontFamily: 'NotoSerif'))
+                      child: Text('    Our goal is to show how current-day Korea has changed since the Korean War. We post videos, write articles, and conduct research on the history of the war to connect with the youth, who do not know much, and to remember the services of the veterans. \n \n    But that is not what we only do. Another goal of ours is to give back to the veterans who have served in the war. There are many of them who are poor and in need of aid. We hope to raise a charity for them to meet their needs and show appreciation for their service. \n \n    But that is not what we only do. Another goal of ours is to give back to the veterans who have served in the war. There are many of them who are poor and in need of aid. We hope to raise a charity for them to meet their needs and show appreciation for their service.',
+                          style: TextStyle(fontSize: 20, fontFamily: 'MontserratRegular'))
                   ),
                   /*Align(
                     alignment: Alignment.centerLeft,
@@ -364,14 +364,116 @@ class _firstState extends State<First>{
 
 
             Scaffold(
-              body: Column(
+              body: SingleChildScrollView(
+    child: ConstrainedBox(
+    constraints: BoxConstraints(),
+    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+
                   Padding(
                     padding: EdgeInsets.only(left:10, top: 10),
-                    child: Text('Contact', style: TextStyle(fontSize: 50, fontFamily: 'MontserratExtraBold')),
+                    child: Text('Contact', style: TextStyle(fontSize: 60, fontFamily: 'MontserratExtraBold')),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20, left: 20),
+                    child: Text('Contact Us', style: TextStyle(fontSize:25, fontFamily:'MontserratExtraBold' ))
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left:20, right: 70, top: 10, bottom: 20),
+                    child: Text('If you wish to contact us for any request, suggestion, or other communication, please feel free to contact by any of the following contact information below. We are available 24/7 to reply to your voices!'
+                    , style: TextStyle(fontSize: 20, fontFamily: 'MontserratRegular')
+                  )),
+                  Divider(
+                    color: Colors.black,
+                    thickness: 1
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.only(top:20),
+                      child: Text('Get In Touch', style: TextStyle(fontSize: 40, fontFamily: 'MontserratExtraBold'))
+                    )
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                          padding: EdgeInsets.only(top:40),
+                          child: Icon(
+                            Icons.alternate_email,
+                            size: 60,
+                          )
+                      )
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                          padding: EdgeInsets.only(),
+                          child: Text('Email', style: TextStyle(fontSize: 30, fontFamily: 'MontserratExtraBold', color: Colors.blue))
+                      )
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                          padding: EdgeInsets.only(top:10),
+                          child: Text('22vzkoreanwar@gmail.com', style: TextStyle(fontSize: 20, fontFamily: 'MontserratRegular'))
+                      )
+                  ),
+
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                          padding: EdgeInsets.only(top:50, left: 150, right: 150),
+                          child:  Image.asset('image/youtube_logo.png', ),
+                      )
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                          padding: EdgeInsets.only(),
+                          child: Text('Youtube', style: TextStyle(fontSize: 30, fontFamily: 'MontserratExtraBold', color: Colors.blue))
+                      )
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                          padding: EdgeInsets.only(top:10),
+                          child: Text('22VZ', style: TextStyle(fontSize: 20, fontFamily: 'MontserratRegular'))
+                      )
+                  ),
+
+
+
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: EdgeInsets.only(top:50, left: 150, right: 150),
+                        child:  Image.asset(
+                          'image/box.jpg'
+                        )
+                      )
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                          padding: EdgeInsets.only(),
+                          child: Text('Address', style: TextStyle(fontSize: 30, fontFamily: 'MontserratExtraBold', color: Colors.blue))
+                      )
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                          padding: EdgeInsets.only(right: 60, left:60, top:10),
+                          child: Text('603-1701, 158, Seongbok 2-ro, Suji-gu, Yongin-si, Gyeonggi-do, Republic of Korea 16809', style: TextStyle(fontSize: 20, fontFamily: 'MontserratRegular'))
+                      )
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom:60)
                   )
+
                 ]
-              )
+              )))
             )
 
 

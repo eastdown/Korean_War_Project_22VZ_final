@@ -145,7 +145,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             )
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: ImageIcon(AssetImage('image/logoP.png'),
+            color: null),
             label: 'Korea Today',
           ),
           BottomNavigationBarItem(
