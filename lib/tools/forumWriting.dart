@@ -50,7 +50,6 @@ class _ForumWritingState extends State<ForumWriting> {
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('You did not fill the textfield'),
                 Text('Please fill out both title and content'),
               ],
             ),
@@ -103,6 +102,7 @@ class _ForumWritingState extends State<ForumWriting> {
           'email': "${FirebaseAuth.instance.currentUser?.email}",
           'imageUrl': downloadUrl,
           'date': DateTime.now(),
+          'displayDate' : DateFormat.yMMMMd('en_US').format(DateTime.now().toUtc()) + '  UTC'
         });
 
 
@@ -125,78 +125,174 @@ class _ForumWritingState extends State<ForumWriting> {
 
 
     return Scaffold(
-        appBar: AppBar(title: Text('Posting')),
+      backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text('Posting', style: TextStyle(color: Colors.black87),),
+          iconTheme: IconThemeData(color: Colors.grey),
+          backgroundColor: Colors.white,
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.white,
+          elevation: 0,
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: Row(
+              children: <Widget>[
+                Container(
+                  child: GestureDetector(
+                    onTap: _getImage,
+                    child: Padding(
+                  padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+                  child: Icon(Icons.image_outlined, size: 40)
+                ),),),
+                Padding(
+                  padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05, ),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.07,
+                  child: GestureDetector(
+                    onTap: (){
+                      if (_image != null && titleController.text != '' && contentController.text != '') {
+                        _uploadFile(context);
+                        Navigator.pop(context);
+
+                      } else if (titleController.text == '' && contentController.text != ''){
+                        _showMyDialog();
+                      } else if (titleController.text != '' && contentController.text == ''){
+                        _showMyDialog();
+                      } else if (titleController.text == '' && contentController.text == ''){
+                        _showMyDialog();
+                      }
+                      else {
+                        FirebaseFirestore.instance.collection('Forum').doc().set({
+                          'title': postTitle,
+                          'content': content,
+                          'displayName': "${FirebaseAuth.instance.currentUser?.displayName}",
+                          'email': "${FirebaseAuth.instance.currentUser?.email}",
+                          'imageUrl': 'https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/forumSample.PNG?alt=media&token=c0c6b228-465c-4b9e-8f5b-ce5424602fe5',
+                          'date': DateTime.now().toUtc(),
+                          'displayDate' : DateFormat.yMMMMd('en_US').format(DateTime.now().toUtc()) + '  UTC'
+                        });
+                        Navigator.pop(context);
+
+                      }
+
+                    },
+                    child: Center(child: Text('Submit', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15),),),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(121, 179, 119, 1.0),
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                )),
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            )
+          )
+        ),
+
+
+
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
             child: Column(
               children: <Widget>[
-                _image == null ? Text('No image') : Image.file(_image),
-
-                TextField(
-                  controller: titleController,
-                  decoration: InputDecoration(
-                      border:OutlineInputBorder(),
-                      labelText: 'Title'
-                  ),
-                  onChanged: (value){
-                    setState(() {
-                      postTitle = value;
-                    });
-                  },
+                Padding(
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02, left: MediaQuery.of(context).size.width *0.03),
+                    child: Text('Title', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
                 ),
-                TextField(
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  controller: contentController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Content'
+                Padding(
+                  padding: EdgeInsets.only( left: MediaQuery.of(context).size.width *0.03, right:MediaQuery.of(context).size.width *0.03 ),
+                  child: TextField(
+                    controller: titleController,
+                    decoration: InputDecoration(
+                        labelText: 'Add a title here'
+                    ),
+                    onChanged: (value){
+                      setState(() {
+                        postTitle = value;
+                      });
+                    },
                   ),
-                  onChanged: (value){
-                    setState(() {
-                      content = value;
-                    });
-                  },
                 ),
-                ElevatedButton(onPressed: _getImage,
 
-                    child: Text('image')),
+                Padding(
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.05, left: MediaQuery.of(context).size.width *0.03),
+                    child: Text('Content', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                ),
+                Padding(
+                  padding: EdgeInsets.only( left: MediaQuery.of(context).size.width *0.03, right:MediaQuery.of(context).size.width *0.03 ),
+                  child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    controller: contentController,
+                    decoration: InputDecoration(
+                        labelText: 'Add your content here',
+                    ),
+                    maxLines: null,
+                    onChanged: (value){
+                      setState(() {
+                        content = value;
+                      });
+                    },
+                  ),
+                ),
+
+                _image == null ? Padding(padding: EdgeInsets.only(top: 20)) :
+                Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width *0.04,),
+                child: Center(
+                    child: Container(
+                        width: MediaQuery.of(context).size.width *0.9,
+                        height: MediaQuery.of(context).size.height *0.15,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromRGBO(175, 175, 175, 1.0),
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Padding(
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *0.25,
+                                      height: MediaQuery.of(context).size.width *0.25,
+                                      child: Image.file(_image, fit: BoxFit.cover),
+                                    ),
+                                    padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03)
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width *0.01,
+                                  ),
+                                  child: Text('Image Selected', style: TextStyle(fontSize: 18, color: Colors.white),),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: MediaQuery.of(context).size.width *0.01,
+                              ),
+                              child: TextButton(
+                                onPressed: (){
+                                  setState(() {
+                                    _image = null;
+                                  });
+                                },
+                                child: Icon(Icons.delete, size: 30, color: Colors.white),
+                              )
+                            ),
 
 
-                ElevatedButton(onPressed: (){
-                  var now = new DateTime.now();
-                  String formatDate = DateFormat('yy/MM/dd - HH:mm:ss').format(now);
+                          ],
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        )
+                    )
+                )
 
-                  if (_image != null && titleController.text != '' && contentController.text != '') {
-                    _uploadFile(context);
-                    Navigator.pop(context);
-
-                  } else if (titleController.text == '' && contentController.text != ''){
-                    _showMyDialog();
-                  } else if (titleController.text != '' && contentController == ''){
-
-                  } else if (titleController.text == '' && contentController == ''){
-
-                  }
-                  else {
-                    FirebaseFirestore.instance.collection('Forum').doc().set({
-                      'title': postTitle,
-                      'content': content,
-                      'displayName': "${FirebaseAuth.instance.currentUser?.displayName}",
-                      'email': "${FirebaseAuth.instance.currentUser?.email}",
-                      'imageUrl': 'https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/forumSample.PNG?alt=media&token=c0c6b228-465c-4b9e-8f5b-ce5424602fe5',
-                      'date': DateTime.now().toUtc(),
-                      'displayDate' : DateFormat.yMMMMd('en_US').format(DateTime.now().toUtc()) + '  UTC'
-                    });
-                    Navigator.pop(context);
-
-                  }
+                )
 
 
 
-                },
-                    child: Text('Post'))
+
               ],
+              crossAxisAlignment: CrossAxisAlignment.start,
             )
         ));
   }

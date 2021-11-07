@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/screens/post.dart';
 import 'package:untitled/tools/drawer.dart';
 import 'package:untitled/tools/forumWriting.dart';
 
 import 'home.dart';
+
+
+late int postIndex;
 
 class ForumView extends StatefulWidget {
   const ForumView({Key? key}) : super(key: key);
@@ -59,30 +64,48 @@ class _ForumViewState extends State<ForumView> {
                       shrinkWrap: true,
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        return SizedBox(child: Card(
-                            child: Row(
-                              children: <Widget> [
-                                Padding(
-                                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03, top: MediaQuery.of(context).size.width *0.03),
-                                  child: SizedBox(
-                                  width: MediaQuery.of(context).size.height *0.15,
-                                  height: MediaQuery.of(context).size.height * 0.15,
-                            child: Image.network('${snapshot.data!.docs[index]['imageUrl']}', fit: BoxFit.cover),),),
-
-                                Column(children: <Widget>[
+                        return SizedBox(
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Post()));
+                                postIndex = index;
+                              },
+                        child: Card(
+                              child: Row(
+                                children: <Widget> [
                                   Padding(
-                                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, top: MediaQuery.of(context).size.height * 0.02),
-                                      child: Text('${snapshot.data!.docs[index]['title']}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
-                                  ),
-                                  Padding(
-                                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
-                                      child:  Text('${snapshot.data!.docs[index]['displayDate']}', style: TextStyle(fontSize: 13),)
-                                  )
-                                ],)
+                                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03, top: MediaQuery.of(context).size.width *0.02,bottom: MediaQuery.of(context).size.width *0.02,),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.height *0.15,
+                                      height: MediaQuery.of(context).size.height * 0.15,
+                                      child: Image.network('${snapshot.data!.docs[index]['imageUrl']}', fit: BoxFit.cover),),),
 
-                              ],
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                            ),
+                                  Flexible(
+                                      child: Column(children: <Widget>[
+                                    Padding(
+                                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, top: MediaQuery.of(context).size.height * 0.02),
+                                        child: Text('${snapshot.data!.docs[index]['title']}',
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,)
+                                    ),
+
+
+                                    Padding(
+                                        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01, left: MediaQuery.of(context).size.width * 0.03),
+                                        child:  Text('${snapshot.data!.docs[index]['displayDate']}', style: TextStyle(fontSize: 13),)
+                                    )
+                                  ],
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                  ))
+
+                                ],
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
+                            )
                         ),
                           height: MediaQuery.of(context).size.height * 0.18,
                           width: MediaQuery.of(context).size.width * 0.9
