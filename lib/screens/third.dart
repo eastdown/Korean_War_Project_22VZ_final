@@ -30,7 +30,7 @@ class _SecondState extends State<Second> {
                 itemBuilder: (context, index) {
                   return GridTile(
                       child: Container(
-                        padding: EdgeInsets.only( bottom:20),
+                        padding: EdgeInsets.only( top:20),
                         child: SizedBox(
                           child: GestureDetector(
                               onTap: () {
@@ -41,7 +41,7 @@ class _SecondState extends State<Second> {
                                   children: <Widget>[
                                     Container(
                                         padding: EdgeInsets.only(right:10, left: 10, bottom:10),
-                                        child: Image.network('${snapshot.data!.docs[index]['image']}', fit: BoxFit.fitWidth,)),
+                                        child: Image.network('${snapshot.data!.docs[index]['image']}', fit: BoxFit.cover,)),
                                     Container(
                                       padding: EdgeInsets.only(
                                         left: 10,),
@@ -55,6 +55,21 @@ class _SecondState extends State<Second> {
                                           textAlign: TextAlign.left,
                                         ),),
                                     ),
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                        left: 15,),
+                                      child: Align(
+                                        alignment: Alignment
+                                            .centerLeft,
+                                        child: Text(snapshot.data!
+                                            .docs[index]['subexplanation'],
+                                          style: TextStyle(
+                                              fontSize: 20, fontFamily: 'MontserratRegular'),
+                                          textAlign: TextAlign.left,
+                                        ),),
+                                    ),
+
+
                                     Divider(color: Colors.black54),
                                   ]
                               )

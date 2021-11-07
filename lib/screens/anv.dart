@@ -43,14 +43,6 @@ class _AnvPageState extends State<AnvPage> {
                     constraints: BoxConstraints(),
           child: Column(
                   children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10, bottom: 10, top:10),
-                        child: Text(snapshot.data!.docs[currentIndex]['title'], style: TextStyle(fontSize:30, fontFamily: 'NotoSerifBold')),
-                      )),
-
-
                     YoutubePlayer(
                       controller: _controller,
                       showVideoProgressIndicator: true,
