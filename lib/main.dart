@@ -4,8 +4,9 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/screens/second.dart';
 import 'package:untitled/screens/third.dart';
-import 'package:untitled/screens/fourth.dart';
 import 'package:untitled/screens/home.dart';
+
+import 'screens/home.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,8 +69,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('This is a snackbar')));
             },
-          ),*/
-          /*IconButton(
+          ),
+          IconButton(
             icon: const Icon(Icons.bookmark),
             color: Colors.grey,
             tooltip: 'Go to the next page',
@@ -92,8 +93,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             },
           ),*/
         ],
-      ),
-      /*drawer: Drawer(
+      ),/*
+      drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -129,7 +130,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
           ],
         ),
-      ),*/ //drawer
+      ),
+      */
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
@@ -140,14 +142,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           BottomNavigationBarItem(
             label:'Home',
             icon: SizedBox(
-              height: 30,
+                height: 30,
                 width: 50,
                 child:Image.asset('image/home.png')),
           ),
           BottomNavigationBarItem(
             icon: SizedBox(
               height: 30,
-                child: Image.asset('image/logoP.jpg'),),
+              child: Image.asset('image/logoP.jpg'),),
 
             label: 'Korea Today',
           ),

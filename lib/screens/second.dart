@@ -32,11 +32,11 @@ class _firstState extends State<First>{
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: TabBar(
-            labelStyle: TextStyle(fontSize:15, fontFamily: 'MontserratRegular'),
+            labelStyle: TextStyle(fontSize:15, fontWeight: FontWeight.bold),
             labelColor: Colors.black,
             tabs: [
               Tab(text: "About us"),
-              Tab(text: "Leaders"),
+              Tab(text: "Leadership"),
               Tab(text: "Contact"),
             ],
           ),
@@ -66,7 +66,7 @@ class _firstState extends State<First>{
                   ),
                   Padding(
                       padding: EdgeInsets.only(left:20, right: 40, top:20),
-                      child: Text('    Our goal is to show how current-day Korea has changed since the Korean War. We post videos, write articles, and conduct research on the history of the war to connect with the youth, who do not know much, and to remember the services of the veterans. \n \n    The name of our organization is 22VZ. 22 is for the 16 countries that fought in the war and the 6 countries that provided aid, V is for veterans, and Z is for the Z generation (the current generation of youths). Our name comes from our mission to connect the youth of the present with the events of the past. \n \n    But that is not what we only do. Another goal of ours is to give back to the veterans who have served in the war. There are many of them who are poor and in need of aid. We hope to raise a charity for them to meet their needs and show appreciation for their service.',
+                      child: Text('    Our goal is to show how current-day Korea has changed since the Korean War. We post videos, write articles, and conduct research on the history of the war to connect with the youth, who do not know much, and to remember the services of the veterans. \n \n    But that is not what we only do. Another goal of ours is to give back to the veterans who have served in the war. There are many of them who are poor and in need of aid. We hope to raise a charity for them to meet their needs and show appreciation for their service. \n \n    But that is not what we only do. Another goal of ours is to give back to the veterans who have served in the war. There are many of them who are poor and in need of aid. We hope to raise a charity for them to meet their needs and show appreciation for their service.',
                           style: TextStyle(fontSize: 20, fontFamily: 'MontserratRegular'))
                   ),
                   /*Align(
@@ -97,7 +97,7 @@ class _firstState extends State<First>{
         child:Padding(
         padding: EdgeInsets.only(bottom: 20, top:10, left: 10),
         child: Text(
-        'Leaders',
+        'Leadership',
         style: TextStyle(fontSize: 50, fontFamily:'MontserratExtraBold'),
       ),),),
 

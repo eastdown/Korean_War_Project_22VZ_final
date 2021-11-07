@@ -43,6 +43,7 @@ class _AnvPageState extends State<AnvPage> {
                     constraints: BoxConstraints(),
           child: Column(
                   children: <Widget>[
+
                     YoutubePlayer(
                       controller: _controller,
                       showVideoProgressIndicator: true,

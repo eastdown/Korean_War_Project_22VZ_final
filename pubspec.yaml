@@ -75,12 +75,12 @@ flutter:
     - image/youtube_logo.png
     - image/box.png
     - image/box.jpg
+    - image/logoP.png
+    - image/logoL.png
+    - image/groupA.jpg
+    - image/home.png
     - image/logoP.jpg
     - image/logoL.jpg
-    - image/home.jpg
-    - image/home.png
-    - image/groupA.jpg
-
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

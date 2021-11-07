@@ -30,9 +30,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
         body: ListView(
             children: <Widget>[
-              //Divider(color: Colors.black, thickness: 3, ),
               Padding(
-                padding: EdgeInsets.only(left:15, top:10),
+                padding: EdgeInsets.only(left:15, top:5),
                 child: Text('Introduction', style: TextStyle(fontSize: 20, fontFamily: 'MontserratExtraBold')),
               ),
 
@@ -52,7 +51,7 @@ class _HomeState extends State<Home> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withOpacity(0.7),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow
@@ -67,7 +66,7 @@ class _HomeState extends State<Home> {
                         return Scaffold(
                           appBar: AppBar(
                             iconTheme: const IconThemeData(color: Colors.grey),
-                           backgroundColor: Colors.white,
+                            backgroundColor: Colors.white,
                             title: Text('About Us', style: TextStyle(color: Colors.black, fontFamily: 'MontserratExtraBold'),),
                           ),
                           body: Scaffold(
@@ -370,30 +369,30 @@ class _HomeState extends State<Home> {
                       },
                     ));
                   },
-                    child: Stack(
-                      children: <Widget> [
-                        ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset('image/groupA.jpg', fit: BoxFit.cover,)
-                ),
-                        Column(
+                  child: Stack(
+                    children: <Widget> [
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.asset('image/groupA.jpg', fit: BoxFit.cover,)
+                      ),
+                      Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Padding(padding:EdgeInsets.only(bottom: 200)),
+                            Padding(padding:EdgeInsets.only(bottom: 220)),
                             Padding(
                               padding: EdgeInsets.only(left:10),
                               child:Text('We are 22VZ', style: TextStyle(
                                 fontSize: 30,
                                 fontFamily: 'MontserratExtraBold',
                                 color: Colors.white,
-                                  shadows: <Shadow>[
+                                shadows: <Shadow>[
 
-                              Shadow(
-                              offset: Offset(0, 0),
-                                blurRadius: 15.0,
-                                color: Color.fromRGBO(0, 0, 70, 0.8),
-                              ),],
-                            )),),
+                                  Shadow(
+                                    offset: Offset(0, 0),
+                                    blurRadius: 15.0,
+                                    color: Color.fromRGBO(0, 0, 70, 0.9),
+                                  ),],
+                              )),),
                             Padding(
                               padding: EdgeInsets.only(left:10),
                               child:Text('Click and Learn More About Us', style: TextStyle(
@@ -412,12 +411,12 @@ class _HomeState extends State<Home> {
 
 
                           ]
-                        )
+                      )
 
-                      ],),),),
+                    ],),),),
 
-              Padding(padding:EdgeInsets.only(bottom:10)),
-              Divider(color: Colors.black, thickness: 3, ),
+              Padding(padding:EdgeInsets.only(bottom:30)),
+              Divider(color: Colors.black, thickness: 2, ),
 
               Padding(
                 padding: EdgeInsets.only(left:15),
@@ -462,7 +461,7 @@ class _HomeState extends State<Home> {
                                                       bottom: 10),
                                                   child: Image.network(
                                                       '${snapshot.data!
-                                                          .docs[index]['image']}', fit: BoxFit.cover),),
+                                                          .docs[index]['image']}'),),
                                                 Container(
                                                   padding: EdgeInsets.only(
                                                     left: 10,),
