@@ -169,7 +169,7 @@ class _ForumWritingState extends State<ForumWriting> {
                           'content': content,
                           'displayName': "${FirebaseAuth.instance.currentUser?.displayName}",
                           'email': "${FirebaseAuth.instance.currentUser?.email}",
-                          'imageUrl': 'https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/forumSample.PNG?alt=media&token=c0c6b228-465c-4b9e-8f5b-ce5424602fe5',
+                          'imageUrl': 'https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/profilePhoto%2FSampleProfile.jpeg?alt=media&token=b19d872b-b906-4fe9-bc69-1e779ee6aa79',
                           'date': DateTime.now().toUtc(),
                           'displayDate' : DateFormat.yMMMMd('en_US').format(DateTime.now().toUtc()) + '  UTC'
                         });

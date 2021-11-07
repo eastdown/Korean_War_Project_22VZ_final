@@ -40,12 +40,30 @@ class _PostState extends State<Post> {
                                     stream: FirebaseFirestore.instance.collection('UserImage').doc('${snapshot.data!.docs[postIndex]['email']}').snapshots(),
                                     builder: (context, snapshot){
                                       if (snapshot.connectionState == ConnectionState.waiting){
-                                        return Divider();
+                                        return CircularProgressIndicator();
                                       }
                                       else if (!snapshot.data!.exists){
-                                        return Padding(
-                                            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
-                                            child: Text('User Name', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)));
+                                        return Padding(padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.08),
+                                            child: Container(
+                                              width: MediaQuery.of(context).size.width * 0.07,
+                                              height: MediaQuery.of(context).size.width * 0.07,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xff7c94b6),
+                                                image: DecorationImage(
+                                                  image: NetworkImage('${snapshot.data!['image']}'),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                borderRadius: BorderRadius.all( Radius.circular(50.0)),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.5),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 1,
+                                                    // changes position of shadow
+                                                  ),
+                                                ],
+                                              ),
+                                            ));
                                       }
                                       else{
                                         return Padding(padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.08),

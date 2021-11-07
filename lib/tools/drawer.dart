@@ -29,6 +29,7 @@ class _DrawerForAllState extends State<DrawerForAll> {
 
   Widget getDrawer (BuildContext context){
     var drawer = Drawer(
+      backgroundColor: Colors.white,
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -46,7 +47,7 @@ class _DrawerForAllState extends State<DrawerForAll> {
                     );
                   } else{
                     return CircleAvatar(
-                      backgroundImage: NetworkImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'),
+                      backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/profilePhoto%2FSampleProfile.jpeg?alt=media&token=b19d872b-b906-4fe9-bc69-1e779ee6aa79'),
                     );
                   }
                 }),
@@ -63,24 +64,6 @@ class _DrawerForAllState extends State<DrawerForAll> {
                     }
                     return Text('UserName');
                 }),
-            onDetailsPressed: () {
-              showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                  title: const Text('This is a meaningless button'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 'Cancel'),
-                      child: const Text('Congratulations'),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 'Cancel'),
-                      child: const Text('You found it'),
-                    ),
-                  ],
-                ),
-              );
-            },
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [

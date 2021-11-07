@@ -123,6 +123,8 @@ class _ProfileState extends State<Profile> {
                                   _uploadFile(context);
                                 });
                                 },
+                                  backgroundColor: Color.fromRGBO(
+                                      144, 210, 140, 1.0),
                                   child: Icon(Icons.image_outlined))),
 
 
@@ -167,7 +169,7 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                   ),
-                  child: const Text('Change Name'),
+                  child: const Text('Change Name', style: TextStyle(color: Colors.black87),),
                 ),
                 Text('${FirebaseAuth.instance.currentUser?.email}'),
 
@@ -193,7 +195,7 @@ class _ProfileState extends State<Profile> {
                         radius: 100,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: Image.network('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',)
+                            child: Image.network('https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/profilePhoto%2FSampleProfile.jpeg?alt=media&token=b19d872b-b906-4fe9-bc69-1e779ee6aa79',)
                         )
                     ),
                     Align(
@@ -203,12 +205,15 @@ class _ProfileState extends State<Profile> {
                         _uploadFile(context);
                         });
                         },
-                        child: Icon(Icons.image_outlined))),
+                        child: Icon(Icons.image_outlined),
+                          backgroundColor: Color.fromRGBO(
+                              144, 210, 140, 1.0),                        )),
 
 
                   ]
 
-                  ))),
+                  )))
+                    ,
                     StreamBuilder<DocumentSnapshot>(
                           stream: FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').snapshots(),
                           builder: (context, snapshot){
@@ -246,11 +251,9 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                       ),
-                      child: const Text('Change Name'),
+                      child: const Text('Change Name', style: TextStyle(color: Colors.black87)),
                     ),
                     Text('${FirebaseAuth.instance.currentUser?.email}'),
-
-
                   ],
               );
             }
