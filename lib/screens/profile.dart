@@ -123,10 +123,54 @@ class _ProfileState extends State<Profile> {
                                   _uploadFile(context);
                                 });
                                 },
-                                  child: Icon(Icons.image_outlined)))
+                                  child: Icon(Icons.image_outlined))),
+
+
                         ]
 
-            )))
+            ))),
+
+                StreamBuilder<DocumentSnapshot>(
+                    stream: FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').snapshots(),
+                    builder: (context, snapshot){
+                      if (snapshot.connectionState == ConnectionState.waiting){
+                        return Divider();
+                      }
+                      else if (!snapshot.data!.exists){
+                        return Padding(
+                            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
+                            child: Text('User Name', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)));
+                      }
+                      else{
+                        return Text('${snapshot.data!['name']}', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold));
+                      }
+                    }),
+                OutlinedButton(
+                  onPressed: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Write New Name'),
+                      content: TextField(controller: nameController,),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'Cancel'),
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').set({
+                              'name': nameController.text,
+                            });
+                            Navigator.pop(context, 'OK');},
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  child: const Text('Change Name'),
+                ),
+                Text('${FirebaseAuth.instance.currentUser?.email}'),
+
 
               ]);
             } else {

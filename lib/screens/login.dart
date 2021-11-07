@@ -16,11 +16,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  saveUserInfo (){
-    FirebaseFirestore.instance.collection('UserImage').doc('${FirebaseAuth.instance.currentUser?.displayName}').set({
-      'image': '',
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

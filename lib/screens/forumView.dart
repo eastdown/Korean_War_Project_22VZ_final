@@ -49,7 +49,7 @@ class _ForumViewState extends State<ForumView> {
                 padding: EdgeInsets.only(top: 20, left: 20),
                 child: Text('General Forum', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),)),
             StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('Forum').snapshots(),
+                stream: FirebaseFirestore.instance.collection('Forum').orderBy("date", descending: true).snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Divider(height: 1, thickness: 1);
@@ -59,9 +59,33 @@ class _ForumViewState extends State<ForumView> {
                       shrinkWrap: true,
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          //leading: Image.network('${snapshot.data!.docs[index]['image']}'),
-                          title: Text('${snapshot.data!.docs[index]['title']}')
+                        return SizedBox(child: Card(
+                            child: Row(
+                              children: <Widget> [
+                                Padding(
+                                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03, top: MediaQuery.of(context).size.width *0.03),
+                                  child: SizedBox(
+                                  width: MediaQuery.of(context).size.height *0.15,
+                                  height: MediaQuery.of(context).size.height * 0.15,
+                            child: Image.network('${snapshot.data!.docs[index]['imageUrl']}', fit: BoxFit.cover),),),
+
+                                Column(children: <Widget>[
+                                  Padding(
+                                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.02, top: MediaQuery.of(context).size.height * 0.02),
+                                      child: Text('${snapshot.data!.docs[index]['title']}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
+                                      child:  Text('${snapshot.data!.docs[index]['displayDate']}', style: TextStyle(fontSize: 13),)
+                                  )
+                                ],)
+
+                              ],
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                        ),
+                          height: MediaQuery.of(context).size.height * 0.18,
+                          width: MediaQuery.of(context).size.width * 0.9
                         );
                       }
                       );

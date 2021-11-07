@@ -148,7 +148,7 @@ class _DrawerForAllState extends State<DrawerForAll> {
                 showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
-                    title: const Text('Log Out?'),
+                    title: const Text('Sign Out?'),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () => Navigator.pop(context, 'Cancel'),

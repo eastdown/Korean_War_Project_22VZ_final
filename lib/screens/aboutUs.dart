@@ -81,7 +81,7 @@ class _AboutUsState extends State<AboutUs> {
                 Padding(padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05)),
                 Container(
                   height:  MediaQuery.of(context).size.height * 0.2,
-                  width: MediaQuery.of(context).size.height *0.2,
+                  width: MediaQuery.of(context).size.height *0.25,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -95,20 +95,20 @@ class _AboutUsState extends State<AboutUs> {
                     Icon(Icons.alternate_email, size: 40),
                   Padding(
                           padding: EdgeInsets.only(),
-                          child: Text('Email', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black))
+                          child: Text('Email', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black))
                       ),
                   Align(
                       alignment: Alignment.center,
                       child: Padding(
                           padding: EdgeInsets.only(top:10),
-                          child: Text('22vzkoreanwar\n @gmail.com', style: TextStyle(fontSize: 20, fontFamily: 'MontserratRegular'))
+                          child: Text('22vzkoreanwar\n @gmail.com', style: TextStyle(fontSize: 12, fontFamily: 'MontserratRegular'))
                       )
                   ),]),
         ),
                 Padding(padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05)),
                 Container(
                   height:  MediaQuery.of(context).size.height * 0.2,
-                  width: MediaQuery.of(context).size.height *0.2,
+                  width: MediaQuery.of(context).size.height *0.25,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -125,13 +125,13 @@ class _AboutUsState extends State<AboutUs> {
                     ),
                     Padding(
                         padding: EdgeInsets.only(),
-                        child: Text('Youtube', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black))
+                        child: Text('Youtube', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black))
                     ),
                     Align(
                         alignment: Alignment.center,
                         child: Padding(
                             padding: EdgeInsets.only(top:10),
-                            child: Text('22VZ', style: TextStyle(fontSize: 20, fontFamily: 'MontserratRegular'))
+                            child: Text('22VZ', style: TextStyle(fontSize: 12, fontFamily: 'MontserratRegular'))
                         )
                     ),]),
                 ),
@@ -139,7 +139,7 @@ class _AboutUsState extends State<AboutUs> {
                 Padding(padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05)),
                 Container(
                   height:  MediaQuery.of(context).size.height * 0.2,
-                  width: MediaQuery.of(context).size.height *0.2,
+                  width: MediaQuery.of(context).size.height *0.25,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -156,14 +156,14 @@ class _AboutUsState extends State<AboutUs> {
                     ),
                     Padding(
                         padding: EdgeInsets.only(),
-                        child: Text('Address', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black))
+                        child: Text('Address', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black))
                     ),
                     Align(
                         alignment: Alignment.center,
                         child: Padding(
                             padding: EdgeInsets.only(top:10, left: 10),
                             child: Text('603-1701, 158, Seongbok 2-ro, Suji-gu, Yongin-si, Gyeonggi-do, Republic of Korea 16809',
-                                style: TextStyle(fontSize: 12, fontFamily: 'MontserratRegular'))
+                                style: TextStyle(fontSize: 10, fontFamily: 'MontserratRegular'))
                         )
                     ),]),
                 ),
