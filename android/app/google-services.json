@@ -1,10 +1,40 @@
 {
   "project_info": {
     "project_number": "901824920538",
+    "firebase_url": "https://vz--korean-war-project-default-rtdb.firebaseio.com",
     "project_id": "vz--korean-war-project",
     "storage_bucket": "vz--korean-war-project.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901824920538:android:103c76bacf4d27aa48dee3",
+        "android_client_info": {
+          "package_name": "com.eastdown.untitled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901824920538-fbeabtchhj6ho3v1h9o20li3itb7bmoc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAotqq5CommWW74VcMY0PoeAROuzYYfkLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901824920538-fbeabtchhj6ho3v1h9o20li3itb7bmoc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:901824920538:android:ff317ce48d105c0b48dee3",

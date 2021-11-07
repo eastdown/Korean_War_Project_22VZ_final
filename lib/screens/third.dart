@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled/tools/appManual.dart';
 import 'package:untitled/tools/drawer.dart';
+import 'package:untitled/tools/drawerLogOut.dart';
 
 import 'anv.dart';
 import 'home.dart';
@@ -46,7 +48,16 @@ class _SecondState extends State<Second> {
             Padding(padding:EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.055))],
 
         ),
-        drawer: DrawerForAll(),
+        drawer: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot){
+              if (!snapshot.hasData){
+                return DrawerLogOut();
+              }
+              return DrawerForAll();
+            }
+
+        ),
         body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('ArticlesAndVideo').snapshots(),
             builder: (context, snapshot) {

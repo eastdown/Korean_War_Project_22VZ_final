@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled/tools/appManual.dart';
 import 'package:untitled/tools/drawer.dart';
+import 'package:untitled/tools/drawerLogOut.dart';
 
 import 'home.dart';
 
@@ -12,7 +14,10 @@ class AboutUs extends StatefulWidget {
   _AboutUsState createState() => _AboutUsState();
 }
 
+
 class _AboutUsState extends State<AboutUs> {
+
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -41,7 +46,9 @@ class _AboutUsState extends State<AboutUs> {
                 Padding(padding:EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.055))],
 
             ),
-        drawer: DrawerForAll(),
+        drawer: (FirebaseAuth.instance.currentUser != null)?
+        DrawerForAll() : DrawerLogOut(),
+
         body: SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
@@ -111,7 +118,10 @@ class _AboutUsState extends State<AboutUs> {
                   ),]),
         ),
                 Padding(padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05)),
-                Container(
+
+
+                GestureDetector(
+                  child: Container(
                   height:  200.sp,
                   width: 195.sp,
                   decoration: BoxDecoration(
@@ -139,7 +149,7 @@ class _AboutUsState extends State<AboutUs> {
                             child: Text('22VZ', style: TextStyle(fontSize: 15.sp))
                         )
                     ),]),
-                ),
+                ),),
 
                 Padding(padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.05)),
                 Container(

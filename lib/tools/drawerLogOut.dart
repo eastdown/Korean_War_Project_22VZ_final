@@ -1,24 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutterfire_ui/auth.dart';
 import 'package:untitled/screens/aboutUS.dart';
 import 'package:untitled/screens/forumView.dart';
 import 'package:untitled/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/screens/login.dart';
 import 'package:untitled/screens/profile.dart';
 import 'package:untitled/screens/third.dart';
 
 import '../main.dart';
 
 
-class DrawerForAll extends StatefulWidget {
-  const DrawerForAll({Key? key}) : super(key: key);
+class DrawerLogOut extends StatefulWidget {
+  const DrawerLogOut({Key? key}) : super(key: key);
 
   @override
-  _DrawerForAllState createState() => _DrawerForAllState();
+  _DrawerLogOutState createState() => _DrawerLogOutState();
 }
 
-class _DrawerForAllState extends State<DrawerForAll> {
+class _DrawerLogOutState extends State<DrawerLogOut> {
   signOut (){
     FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
@@ -35,35 +37,14 @@ class _DrawerForAllState extends State<DrawerForAll> {
         children: <Widget>[
 
           UserAccountsDrawerHeader(
-            currentAccountPicture: StreamBuilder<DocumentSnapshot>(
-                stream: FirebaseFirestore.instance.collection('UserImage').doc('${FirebaseAuth.instance.currentUser?.email}').snapshots(),
-                builder: (context, snapshot){
-                  if (snapshot.connectionState == ConnectionState.waiting){
-                    return CircularProgressIndicator();
-                  }
-                  else if(snapshot.data!.exists){
-                    return CircleAvatar(
-                      backgroundImage: NetworkImage('${snapshot.data!['image']}'),
-                    );
-                  } else{
-                    return CircleAvatar(
-                      backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/profilePhoto%2FSampleProfile.jpeg?alt=media&token=b19d872b-b906-4fe9-bc69-1e779ee6aa79'),
-                    );
-                  }
-                }),
+            currentAccountPicture: CircleAvatar(
+          backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/profilePhoto%2FSampleProfile.jpeg?alt=media&token=b19d872b-b906-4fe9-bc69-1e779ee6aa79'),
+    ),
 
-            accountEmail: Text("${FirebaseAuth.instance.currentUser?.email}"),
-            accountName: StreamBuilder<DocumentSnapshot>(
-                stream: FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').snapshots(),
-                builder: (context, snapshot){
-                  if (snapshot.connectionState == ConnectionState.waiting){
-                    return Divider();
-                  }
-                  else if(snapshot.data!.exists){
-                    return Text('${snapshot.data!['name']}');
-                    }
-                    return Text('UserName');
-                }),
+            accountName: Text('Anonymous User'),
+            accountEmail: Text('Login to set your profile'),
+
+
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -128,26 +109,30 @@ class _DrawerForAllState extends State<DrawerForAll> {
               color: Colors.black54
           ),
           ListTile(
-              leading: Icon(Icons.exit_to_app, color: Colors.black54),
+              leading: Icon(Icons.login_outlined, color: Colors.black54),
               onTap: () {
                 showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
-                    title: const Text('Sign Out?'),
+                    title: const Text('Sign In?'),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () => Navigator.pop(context, 'Cancel'),
                         child: const Text('Cancel'),
                       ),
                       TextButton(
-                        onPressed: () {signOut();},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Login()));
+                        },
                         child: const Text('Yes'),
                       ),
                     ],
                   ),
                 );
               },
-              title: Text('Sign Out')
+              title: Text('Sign In')
           ),
         ],
       ),
@@ -159,6 +144,6 @@ class _DrawerForAllState extends State<DrawerForAll> {
     return ScreenUtilInit(
         designSize: Size(390, 763),
 
-    builder: () =>getDrawer(context));
+        builder: () =>getDrawer(context));
   }
 }

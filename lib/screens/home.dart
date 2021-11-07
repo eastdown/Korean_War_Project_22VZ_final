@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled/screens/forumView.dart';
 import 'package:untitled/screens/post.dart';
 import 'package:untitled/tools/appManual.dart';
 import 'package:untitled/tools/drawer.dart';
+import 'package:untitled/tools/drawerLogOut.dart';
 
 import 'anv.dart';
 
@@ -60,7 +60,10 @@ class _HomeState extends State<Home> {
               Padding(padding:EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.055))],
 
           ),
-          drawer: DrawerForAll(),
+          drawer: (FirebaseAuth.instance.currentUser != null)?
+              DrawerForAll() : DrawerLogOut(),
+
+
           body: ListView(
               children: <Widget>[
                 Align(

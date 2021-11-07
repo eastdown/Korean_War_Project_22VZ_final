@@ -17,14 +17,12 @@ class ForumWriting extends StatefulWidget {
 
 class _ForumWritingState extends State<ForumWriting> {
 
-  bool uploading = false;
-
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
-
+  TextEditingController nameController = TextEditingController();
 
   String postTitle = '';
   String content = '';
@@ -68,6 +66,32 @@ class _ForumWritingState extends State<ForumWriting> {
     );
   }
 
+  Future<void> _showNameDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Cannot Post Your Writing'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Please fill out your name'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 
 
@@ -102,7 +126,9 @@ class _ForumWritingState extends State<ForumWriting> {
           'email': "${FirebaseAuth.instance.currentUser?.email}",
           'imageUrl': downloadUrl,
           'date': DateTime.now(),
-          'displayDate' : DateFormat.yMMMd('en_US').format(DateTime.now().toUtc())
+          'displayDate' : DateFormat.yMMMd('en_US').format(DateTime.now().toUtc()),
+          'login': (FirebaseAuth.instance.currentUser != null) ? true : false,
+          'logoutName': nameController.text
         });
 
 
@@ -151,44 +177,48 @@ class _ForumWritingState extends State<ForumWriting> {
                 ),),),
                 Padding(
                   padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05, ),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                  height: 53.5.sp,
-                  child: GestureDetector(
-                    onTap: (){
-                      if (_image != null && titleController.text != '' && contentController.text != '') {
-                        _uploadFile(context);
-                        Navigator.pop(context);
+                    child: GestureDetector(
+                      onTap: (){
+                        if (FirebaseAuth.instance.currentUser == null && nameController.text == ''){
+                          _showNameDialog();
+                        }
+                        else if (_image != null && titleController.text != '' && contentController.text != '') {
+                          _uploadFile(context);
+                          Navigator.pop(context);
 
-                      } else if (titleController.text == '' && contentController.text != ''){
-                        _showMyDialog();
-                      } else if (titleController.text != '' && contentController.text == ''){
-                        _showMyDialog();
-                      } else if (titleController.text == '' && contentController.text == ''){
-                        _showMyDialog();
-                      }
-                      else {
-                        FirebaseFirestore.instance.collection('Forum').doc().set({
-                          'title': postTitle,
-                          'content': content,
-                          'displayName': "${FirebaseAuth.instance.currentUser?.displayName}",
-                          'email': "${FirebaseAuth.instance.currentUser?.email}",
-                          'imageUrl': 'https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/forumSample.PNG?alt=media&token=c0c6b228-465c-4b9e-8f5b-ce5424602fe5',
-                          'date': DateTime.now().toUtc(),
-                          'displayDate' : DateFormat.yMMMd('en_US').format(DateTime.now())
-                        });
-                        Navigator.pop(context);
+                        } else if (titleController.text == '' || contentController.text == ''){
+                          _showMyDialog();
+                        }
+                        else {
+                          FirebaseFirestore.instance.collection('Forum').doc().set({
+                            'title': postTitle,
+                            'content': content,
+                            'displayName': "${FirebaseAuth.instance.currentUser?.displayName}",
+                            'email': "${FirebaseAuth.instance.currentUser?.email}",
+                            'imageUrl': null,
+                            'date': DateTime.now().toUtc(),
+                            'displayDate' : DateFormat.yMMMd('en_US').format(DateTime.now()),
+                            'login': (FirebaseAuth.instance.currentUser != null) ? true : false,
+                            'logoutName': nameController.text
+                          });
+                          Navigator.pop(context);
 
-                      }
+                        }
 
-                    },
-                    child: Center(child: Text('Submit', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15.sp),),),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(121, 179, 119, 1.0),
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                )),
+                      },
+
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: 53.5.sp,
+                          child: Center(child: Text('Submit', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15.sp),),),
+
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(121, 179, 119, 1.0),
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                        )
+                    )
+                    ),
               ],
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             )
@@ -201,8 +231,17 @@ class _ForumWritingState extends State<ForumWriting> {
           scrollDirection: Axis.vertical,
             child: Column(
               children: <Widget>[
+                (FirebaseAuth.instance.currentUser == null) ? Padding(
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, left: MediaQuery.of(context).size.width *0.03, right:MediaQuery.of(context).size.width *0.4 ),
+                  child: TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Write your name here',
+                    ),
+                  ),
+                ): Padding(padding:EdgeInsets.zero),
                 Padding(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02, left: MediaQuery.of(context).size.width *0.03),
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.05, left: MediaQuery.of(context).size.width *0.03),
                     child: Text('Title', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp),)
                 ),
                 Padding(
@@ -241,6 +280,7 @@ class _ForumWritingState extends State<ForumWriting> {
                     },
                   ),
                 ),
+
 
 
                 _image == null ? Padding(padding: EdgeInsets.only(top: 20.sp)) :

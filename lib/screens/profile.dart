@@ -8,8 +8,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:untitled/tools/appManual.dart';
 import 'package:untitled/tools/drawer.dart';
+import 'package:untitled/tools/drawerLogOut.dart';
 
 import 'home.dart';
+import 'login.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -91,133 +93,88 @@ class _ProfileState extends State<Profile> {
 
           ),
 
-      drawer: DrawerForAll(),
-      body: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance.collection('UserImage').doc('${FirebaseAuth.instance.currentUser?.email}').snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting){
-              return CircularProgressIndicator();
-            }
-            else if (snapshot.data!.exists){
-              return Column(children: <Widget>[
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 20.sp, left: 20.sp),
-                      child: Text('Profile', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),),)),
-                Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                        width: 200.sp,
-                        height: 200.sp,
-                        child: Stack(children: <Widget>[
-                          CircleAvatar(
-                              radius: 100.sp,
-                              child: SizedBox(
-                                width: 200.sp,
-                                  height: 200.sp,
-                                  child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100.sp),
-                                  child: Image.network('${snapshot.data!['image']}', fit: BoxFit.cover))
-                          ),),
-                          Align(
-                              alignment: Alignment.bottomRight,
-                              child: FloatingActionButton(onPressed: () async {
-                                await _getImage().then((value) {
-                                  _uploadFile(context);
-                                });
-                                },
-                                  backgroundColor: Color.fromRGBO(
-                                      144, 210, 140, 1.0),
-                                  child: Icon(Icons.image_outlined))),
+      drawer: (FirebaseAuth.instance.currentUser != null)?
+      DrawerForAll() : DrawerLogOut(),
 
-
-                        ]
-
-            ))),
-
-                StreamBuilder<DocumentSnapshot>(
-                    stream: FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').snapshots(),
-                    builder: (context, snapshot){
-                      if (snapshot.connectionState == ConnectionState.waiting){
-                        return Divider();
-                      }
-                      else if (!snapshot.data!.exists){
-                        return Padding(
-                            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
-                            child: Text('Anonymous User', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold)));
-                      }
-                      else{
-                        return Text('${snapshot.data!['name']}', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold));
-                      }
-                    }),
-                OutlinedButton(
-                  onPressed: () => showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Write New Name'),
-                      content: TextField(controller: nameController,),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Cancel'),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').set({
-                              'name': nameController.text,
-                            });
-                            Navigator.pop(context, 'OK');},
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  child: const Text('Change Name', style: TextStyle(color: Colors.black87),),
-                ),
-                Text('${FirebaseAuth.instance.currentUser?.email}'),
-
-
-              ]);
-            } else {
+      body: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot){
+            if (!snapshot.hasData){
               return Column(
-                  children: <Widget>[
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 20.sp, left: 20.sp),
-                          child: Text('Profile', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),)),
-                    Align(
-                alignment: Alignment.center,
-                  child: SizedBox(
-                    width: 200.w,
-                      height: 200.h,
-                      child: Stack(children:
-                  <Widget>[
-                    CircleAvatar(
-                        radius: 100.sp,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100.sp),
-                            child: Image.network('https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/profilePhoto%2FSampleProfile.jpeg?alt=media&token=b19d872b-b906-4fe9-bc69-1e779ee6aa79',)
-                        )
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                        child: FloatingActionButton(onPressed: () async {
-                        await _getImage().then((value) {
-                        _uploadFile(context);
-                        });
-                        },
-                        child: Icon(Icons.image_outlined),
-                          backgroundColor: Color.fromRGBO(
-                              144, 210, 140, 1.0),                        )),
+                children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 30.sp),
+                      child: Center(child: Icon(Icons.warning_amber_rounded, size: 150.sp, color: Colors.amber,),),),
+                  Padding(
+                    padding: EdgeInsets.only(top: 30.sp, left: 30.sp, right: 30.sp),
+                    child: Center(child: Text('Please sign in', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.sp),),),),
+
+                  Padding(
+                    padding: EdgeInsets.only( left: 30.sp, right: 30.sp),
+                    child: Center(child: Text('to set your profile', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40.sp),),),),
+                  Padding(
+                    padding: EdgeInsets.only(top: 40.sp, left: 30.sp, right: 30.sp),
+                    child: Center(child: FloatingActionButton.extended(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Login()));
+                      },
+                      label: Text('Sign In', style: TextStyle(fontSize: 25.sp),),
+                      icon: Icon(Icons.login, size: 25.sp),
+                      backgroundColor: Color.fromRGBO(96, 170, 122, 1.0),
+            ),),),
+
+                  ],
+
+              );
+            }
+            return StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance.collection('UserImage').doc('${FirebaseAuth.instance.currentUser?.email}').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting){
+                    return CircularProgressIndicator();
+                  }
+                  else if (snapshot.data!.exists){
+                    return Column(children: <Widget>[
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 20.sp, left: 20.sp),
+                            child: Text('Profile', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),),)),
+
+                      Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                              width: 200.sp,
+                              height: 200.sp,
+                              child: Stack(children: <Widget>[
+                                CircleAvatar(
+                                  radius: 100.sp,
+                                  child: SizedBox(
+                                      width: 200.sp,
+                                      height: 200.sp,
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(100.sp),
+                                          child: Image.network('${snapshot.data!['image']}', fit: BoxFit.cover))
+                                  ),),
+                                Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: FloatingActionButton(onPressed: () async {
+                                      await _getImage().then((value) {
+                                        _uploadFile(context);
+                                      });
+                                    },
+                                        backgroundColor: Color.fromRGBO(
+                                            144, 210, 140, 1.0),
+                                        child: Icon(Icons.image_outlined))),
 
 
-                  ]
+                              ]
 
-                  )))
-                    ,
-                    StreamBuilder<DocumentSnapshot>(
+                              ))),
+
+                      StreamBuilder<DocumentSnapshot>(
                           stream: FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').snapshots(),
                           builder: (context, snapshot){
                             if (snapshot.connectionState == ConnectionState.waiting){
@@ -225,44 +182,128 @@ class _ProfileState extends State<Profile> {
                             }
                             else if (!snapshot.data!.exists){
                               return Padding(
-                                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
-                                  child: Text('User Name', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold)));
+                                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
+                                  child: Text('Anonymous User', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold)));
                             }
                             else{
                               return Text('${snapshot.data!['name']}', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold));
                             }
                           }),
-                    OutlinedButton(
-                      onPressed: () => showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Write New Name'),
-                          content: TextField(controller: nameController,),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: const Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').set({
-                                  'name': nameController.text,
-                                });
-                                Navigator.pop(context, 'OK');},
-                              child: const Text('OK'),
-                            ),
-                          ],
+                      OutlinedButton(
+                        onPressed: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Write New Name'),
+                            content: TextField(controller: nameController,),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'Cancel'),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').set({
+                                    'name': nameController.text,
+                                  });
+                                  Navigator.pop(context, 'OK');},
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
                         ),
+                        child: const Text('Change Name', style: TextStyle(color: Colors.black87),),
                       ),
-                      child: const Text('Change Name', style: TextStyle(color: Colors.black87)),
-                    ),
-                    Text('${FirebaseAuth.instance.currentUser?.email}'),
-                  ],
-              );
-            }
+                      Text('${FirebaseAuth.instance.currentUser?.email}'),
 
+
+                    ]);
+                  } else {
+                    return Column(
+                      children: <Widget>[
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 20.sp, left: 20.sp),
+                              child: Text('Profile', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),)),
+                        Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                                width: 200.w,
+                                height: 200.h,
+                                child: Stack(children:
+                                <Widget>[
+                                  CircleAvatar(
+                                      radius: 100.sp,
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(100.sp),
+                                          child: Image.network('https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/profilePhoto%2FSampleProfile.jpeg?alt=media&token=b19d872b-b906-4fe9-bc69-1e779ee6aa79',)
+                                      )
+                                  ),
+                                  Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: FloatingActionButton(onPressed: () async {
+                                        await _getImage().then((value) {
+                                          _uploadFile(context);
+                                        });
+                                      },
+                                        child: Icon(Icons.image_outlined),
+                                        backgroundColor: Color.fromRGBO(
+                                            144, 210, 140, 1.0),                        )),
+
+
+                                ]
+
+                                )))
+                        ,
+                        StreamBuilder<DocumentSnapshot>(
+                            stream: FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').snapshots(),
+                            builder: (context, snapshot){
+                              if (snapshot.connectionState == ConnectionState.waiting){
+                                return Divider();
+                              }
+                              else if (!snapshot.data!.exists){
+                                return Padding(
+                                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
+                                    child: Text('User Name', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold)));
+                              }
+                              else{
+                                return Text('${snapshot.data!['name']}', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold));
+                              }
+                            }),
+                        OutlinedButton(
+                          onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Write New Name'),
+                              content: TextField(controller: nameController,),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    FirebaseFirestore.instance.collection('UserName').doc('${FirebaseAuth.instance.currentUser?.email}').set({
+                                      'name': nameController.text,
+                                    });
+                                    Navigator.pop(context, 'OK');},
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: const Text('Change Name', style: TextStyle(color: Colors.black87)),
+                        ),
+                        Text('${FirebaseAuth.instance.currentUser?.email}'),
+                      ],
+                    );
+                  }
+
+                }
+            );
           }
-          ),
+
+      ),
     ));
   }
 }
