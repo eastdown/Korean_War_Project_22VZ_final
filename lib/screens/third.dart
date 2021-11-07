@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:untitled/tools/drawer.dart';
 
 import 'anv.dart';
 import 'home.dart';
@@ -18,7 +19,28 @@ class _SecondState extends State<Second> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(appBar: AppBar(
+      toolbarHeight: MediaQuery.of(context).size.height *0.08,
+      iconTheme: const IconThemeData(color:Colors.grey),
+      backgroundColor: Colors.white,
+      centerTitle: true,
+      title: Image.asset('image/logo.jpg', fit: BoxFit.fitHeight, height: 55),
+      actions: [
+        GestureDetector(
+          onTap:() {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Home()));
+          },
+          child: Column(
+              children: <Widget>[
+                Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015)),
+                Icon(Icons.book_outlined),
+                Text('   App\nManual',style: TextStyle(color: Colors.black54, fontSize: 10),)]),),
+        Padding(padding:EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.055))],
+
+    ),
+        drawer: DrawerForAll(),
         body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('ArticlesAndVideo').snapshots(),
             builder: (context, snapshot) {
