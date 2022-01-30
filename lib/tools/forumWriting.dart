@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -98,11 +99,10 @@ class _ForumWritingState extends State<ForumWriting> {
         await FirebaseFirestore.instance.collection('Forum').doc().set({
           'title': postTitle,
           'content': content,
-          'displayName': "${FirebaseAuth.instance.currentUser?.displayName}",
           'email': "${FirebaseAuth.instance.currentUser?.email}",
           'imageUrl': downloadUrl,
           'date': DateTime.now(),
-          'displayDate' : DateFormat.yMMMMd('en_US').format(DateTime.now().toUtc()) + '  UTC'
+          'displayDate' : DateFormat.yMMMd('en_US').format(DateTime.now().toUtc())
         });
 
 
@@ -124,9 +124,13 @@ class _ForumWritingState extends State<ForumWriting> {
     }
 
 
-    return Scaffold(
+    return ScreenUtilInit(
+        designSize: Size(390, 763),
+
+        builder: () => Scaffold(
       backgroundColor: Colors.white,
         appBar: AppBar(
+          elevation: 0,
           title: Text('Posting', style: TextStyle(color: Colors.black87),),
           iconTheme: IconThemeData(color: Colors.grey),
           backgroundColor: Colors.white,
@@ -135,7 +139,7 @@ class _ForumWritingState extends State<ForumWriting> {
           color: Colors.white,
           elevation: 0,
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: 76.5.sp,
             child: Row(
               children: <Widget>[
                 Container(
@@ -149,7 +153,7 @@ class _ForumWritingState extends State<ForumWriting> {
                   padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05, ),
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.3,
-                  height: MediaQuery.of(context).size.height * 0.07,
+                  height: 53.5.sp,
                   child: GestureDetector(
                     onTap: (){
                       if (_image != null && titleController.text != '' && contentController.text != '') {
@@ -169,16 +173,16 @@ class _ForumWritingState extends State<ForumWriting> {
                           'content': content,
                           'displayName': "${FirebaseAuth.instance.currentUser?.displayName}",
                           'email': "${FirebaseAuth.instance.currentUser?.email}",
-                          'imageUrl': 'https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/profilePhoto%2FSampleProfile.jpeg?alt=media&token=b19d872b-b906-4fe9-bc69-1e779ee6aa79',
+                          'imageUrl': 'https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/forumSample.PNG?alt=media&token=c0c6b228-465c-4b9e-8f5b-ce5424602fe5',
                           'date': DateTime.now().toUtc(),
-                          'displayDate' : DateFormat.yMMMMd('en_US').format(DateTime.now().toUtc()) + '  UTC'
+                          'displayDate' : DateFormat.yMMMd('en_US').format(DateTime.now())
                         });
                         Navigator.pop(context);
 
                       }
 
                     },
-                    child: Center(child: Text('Submit', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15),),),
+                    child: Center(child: Text('Submit', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15.sp),),),
                   ),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(121, 179, 119, 1.0),
@@ -199,12 +203,13 @@ class _ForumWritingState extends State<ForumWriting> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02, left: MediaQuery.of(context).size.width *0.03),
-                    child: Text('Title', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                    child: Text('Title', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp),)
                 ),
                 Padding(
                   padding: EdgeInsets.only( left: MediaQuery.of(context).size.width *0.03, right:MediaQuery.of(context).size.width *0.03 ),
                   child: TextField(
                     controller: titleController,
+                    maxLength: 50,
                     decoration: InputDecoration(
                         labelText: 'Add a title here'
                     ),
@@ -218,7 +223,7 @@ class _ForumWritingState extends State<ForumWriting> {
 
                 Padding(
                     padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.05, left: MediaQuery.of(context).size.width *0.03),
-                    child: Text('Content', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
+                    child: Text('Content', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp),)
                 ),
                 Padding(
                   padding: EdgeInsets.only( left: MediaQuery.of(context).size.width *0.03, right:MediaQuery.of(context).size.width *0.03 ),
@@ -237,7 +242,8 @@ class _ForumWritingState extends State<ForumWriting> {
                   ),
                 ),
 
-                _image == null ? Padding(padding: EdgeInsets.only(top: 20)) :
+
+                _image == null ? Padding(padding: EdgeInsets.only(top: 20.sp)) :
                 Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width *0.04,),
                 child: Center(
                     child: Container(
@@ -262,7 +268,7 @@ class _ForumWritingState extends State<ForumWriting> {
                                 Padding(
                                   padding: EdgeInsets.only(left: MediaQuery.of(context).size.width *0.01,
                                   ),
-                                  child: Text('Image Selected', style: TextStyle(fontSize: 18, color: Colors.white),),
+                                  child: Text('Image Selected', style: TextStyle(fontSize: 18.sp, color: Colors.white),),
                                 ),
                               ],
                             ),
@@ -275,7 +281,7 @@ class _ForumWritingState extends State<ForumWriting> {
                                     _image = null;
                                   });
                                 },
-                                child: Icon(Icons.delete, size: 30, color: Colors.white),
+                                child: Icon(Icons.delete, size: 30.sp, color: Colors.white),
                               )
                             ),
 
@@ -294,6 +300,6 @@ class _ForumWritingState extends State<ForumWriting> {
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
             )
-        ));
+        )));
   }
 }

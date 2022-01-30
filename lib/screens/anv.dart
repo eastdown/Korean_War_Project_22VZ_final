@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'home.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -30,13 +31,16 @@ class _AnvPageState extends State<AnvPage> {
             ),
           );
 
-          return Scaffold(
+          return ScreenUtilInit(
+              designSize: Size(390, 763),
+
+              builder: () => Scaffold(
               appBar: AppBar(
                   elevation: 0,
                   iconTheme: const IconThemeData(color: Colors.grey),
                   backgroundColor: Colors.white,
                   centerTitle: true,
-                  title: Text(snapshot.data!.docs[currentIndex]['title'], style: TextStyle(color: Colors.black, fontFamily: 'MontserratExtraBold'))
+                  title: Text(snapshot.data!.docs[currentIndex]['title'], style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))
               ),
               body: SingleChildScrollView(
                   child: ConstrainedBox(
@@ -50,16 +54,16 @@ class _AnvPageState extends State<AnvPage> {
                     ),
 
                         Padding(
-                      padding: EdgeInsets.only(left:15, right: 15, top: 10),
-                        child:Text(snapshot.data!.docs[currentIndex]['article'].replaceAll("\\n", "\n"), style: TextStyle(height: 1.6, fontSize:20, fontFamily: 'NotoSerif'))
+                      padding: EdgeInsets.only(left:15.sp, right: 15.sp, top: 10.sp),
+                        child:Text(snapshot.data!.docs[currentIndex]['article'].replaceAll("\\n", "\n"), style: TextStyle(height: 1.6.h, fontSize:20.sp,))
                     ),
 
                     Padding(
-                      padding: EdgeInsets.only(bottom: 50)
+                      padding: EdgeInsets.only(bottom: 50.sp)
                     )
                   ]
               )))
-          );
+          ));
         }
     );
   }

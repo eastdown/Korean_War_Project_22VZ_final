@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:untitled/tools/appManual.dart';
 import 'package:untitled/tools/drawer.dart';
 
 import 'home.dart';
@@ -54,7 +56,6 @@ class _ProfileState extends State<Profile> {
     } catch (e) {
       print(e);
     }
-    Navigator.pop(context);
   }
 
 
@@ -64,27 +65,31 @@ class _ProfileState extends State<Profile> {
     TextEditingController nameController = TextEditingController();
     String userName = '';
 
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height *0.09,
-        iconTheme: const IconThemeData(color:Colors.grey),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Image.asset('image/logo.jpg', fit: BoxFit.fitHeight, height: 55),
-        actions: [
-          GestureDetector(
-            onTap:() {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Home()));
-            },
-            child: Column(
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015)),
-                  Icon(Icons.book_outlined, size: MediaQuery.of(context).size.height * 0.035),
-                  Text('   App\nManual',style: TextStyle(color: Colors.black54, fontSize: 10),)]),),
-          Padding(padding:EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.055))],
-      ),
+    return ScreenUtilInit(
+        designSize: Size(390, 763),
+
+        builder: () => Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 69.sp,
+            iconTheme: const IconThemeData(color:Colors.grey),
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            title: Image.asset('image/logo.jpg', fit: BoxFit.fitHeight, height: 55.h),
+            actions: [
+              GestureDetector(
+                onTap:() {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AppManual()));
+                },
+                child: Column(
+                    children: <Widget>[
+                      Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015)),
+                      Icon(Icons.book_outlined, size: 26.sp),
+                      Text('   App\nManual',style: TextStyle(color: Colors.black54, fontSize: 10.sp),)]),),
+              Padding(padding:EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.055))],
+
+          ),
 
       drawer: DrawerForAll(),
       body: StreamBuilder<DocumentSnapshot>(
@@ -95,25 +100,24 @@ class _ProfileState extends State<Profile> {
             }
             else if (snapshot.data!.exists){
               return Column(children: <Widget>[
-              Align(
-              alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Text('Profile', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
-                ),),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 20.sp, left: 20.sp),
+                      child: Text('Profile', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),),)),
                 Align(
                     alignment: Alignment.center,
                     child: SizedBox(
-                        width: 200,
-                        height: 200,
+                        width: 200.sp,
+                        height: 200.sp,
                         child: Stack(children: <Widget>[
                           CircleAvatar(
-                              radius: 100,
+                              radius: 100.sp,
                               child: SizedBox(
-                                width: 200,
-                                  height: 200,
+                                width: 200.sp,
+                                  height: 200.sp,
                                   child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
+                                borderRadius: BorderRadius.circular(100.sp),
                                   child: Image.network('${snapshot.data!['image']}', fit: BoxFit.cover))
                           ),),
                           Align(
@@ -141,10 +145,10 @@ class _ProfileState extends State<Profile> {
                       else if (!snapshot.data!.exists){
                         return Padding(
                             padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
-                            child: Text('User Name', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)));
+                            child: Text('Anonymous User', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold)));
                       }
                       else{
-                        return Text('${snapshot.data!['name']}', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold));
+                        return Text('${snapshot.data!['name']}', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold));
                       }
                     }),
                 OutlinedButton(
@@ -179,22 +183,21 @@ class _ProfileState extends State<Profile> {
               return Column(
                   children: <Widget>[
                     Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 8, top: 10),
-                        child: Text('Profile', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
-                      ),),
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 20.sp, left: 20.sp),
+                          child: Text('Profile', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),)),
                     Align(
                 alignment: Alignment.center,
                   child: SizedBox(
-                    width: 200,
-                      height: 200,
+                    width: 200.w,
+                      height: 200.h,
                       child: Stack(children:
                   <Widget>[
                     CircleAvatar(
-                        radius: 100,
+                        radius: 100.sp,
                         child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
+                            borderRadius: BorderRadius.circular(100.sp),
                             child: Image.network('https://firebasestorage.googleapis.com/v0/b/vz--korean-war-project.appspot.com/o/profilePhoto%2FSampleProfile.jpeg?alt=media&token=b19d872b-b906-4fe9-bc69-1e779ee6aa79',)
                         )
                     ),
@@ -223,10 +226,10 @@ class _ProfileState extends State<Profile> {
                             else if (!snapshot.data!.exists){
                               return Padding(
                                 padding: EdgeInsets.only(top: MediaQuery.of(context).size.height *0.02),
-                                  child: Text('User Name', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)));
+                                  child: Text('User Name', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold)));
                             }
                             else{
-                              return Text('${snapshot.data!['name']}', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold));
+                              return Text('${snapshot.data!['name']}', style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold));
                             }
                           }),
                     OutlinedButton(
@@ -260,7 +263,7 @@ class _ProfileState extends State<Profile> {
 
           }
           ),
-    );
+    ));
   }
 }
 

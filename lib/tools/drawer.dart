@@ -1,7 +1,6 @@
 import 'dart:io';
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:untitled/screens/aboutUS.dart';
 import 'package:untitled/screens/forumView.dart';
 import 'package:untitled/screens/home.dart';
@@ -24,7 +23,10 @@ class DrawerForAll extends StatefulWidget {
 class _DrawerForAllState extends State<DrawerForAll> {
   signOut (){
     FirebaseAuth.instance.signOut();
-    Navigator.pop(context, 'Cancel');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => MyApp()),
+    );
   }
 
   Widget getDrawer (BuildContext context){
@@ -81,11 +83,11 @@ class _DrawerForAllState extends State<DrawerForAll> {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MyStatefulWidget()));
+                    MaterialPageRoute(builder: (context) => Home()));
               }
           ),
           ListTile(
-              leading: SizedBox(child: Image.asset('image/logoP.jpg'), height: MediaQuery.of(context).size.height *0.04),
+              leading: SizedBox(child: Image.asset('image/logoP.jpg'), height: 30.sp),
               title: Text('Korea Today', style: TextStyle(color: Colors.black87)),
               onTap: () {
 
@@ -103,15 +105,7 @@ class _DrawerForAllState extends State<DrawerForAll> {
                     MaterialPageRoute(builder: (context) => ForumView()));
               }
           ),
-          ListTile(
-              leading: Icon(Icons.people_outline, color: Colors.black54),
-              title: Text('About Us', style: TextStyle(color: Colors.black87)),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AboutUs()));
-              }
-          ),
+
           ListTile(
               leading: Icon(Icons.settings, color: Colors.black54),
               title: Text('Profile', style: TextStyle(color: Colors.black87)),
@@ -122,6 +116,16 @@ class _DrawerForAllState extends State<DrawerForAll> {
                     MaterialPageRoute(builder: (context) => Profile()));
               }
           ),
+          ListTile(
+              leading: Icon(Icons.people_outline, color: Colors.black54),
+              title: Text('About Us', style: TextStyle(color: Colors.black87)),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AboutUs()));
+              }
+          ),
+
           Divider(
               color: Colors.black54
           ),
@@ -154,6 +158,9 @@ class _DrawerForAllState extends State<DrawerForAll> {
   }
   @override
   Widget build(BuildContext context) {
-    return getDrawer(context);
+    return ScreenUtilInit(
+        designSize: Size(390, 763),
+
+    builder: () =>getDrawer(context));
   }
 }
